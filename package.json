@@ -1,0 +1,11 @@
+{
+  "name": "redux-toolkit-examples",
+  "version": "0.1.0",
+  "description": "Examples from the Intermediate Redux with Redux Toolkit course on Educative.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Steve Cochrane",
+  "license": "ISC"
+}
