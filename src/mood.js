@@ -1,4 +1,6 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+
+export const UPDATE_MOOD = "UPDATE_MOOD";
 
 export const MOODS = {
   SAD: "sad",
@@ -12,16 +14,15 @@ export const MOODS = {
 
 const INITIAL_STATE = { mood: MOODS.SAD };
 
-const UPDATE_MOOD = "UPDATE_MOOD";
-export const updateCatMood = createAction(UPDATE_MOOD);
-
-export const reducer = createReducer(
-  INITIAL_STATE,
-  {
-    [updateCatMood]: (state, action) => {
+const flappyMoodSlice = createSlice({
+  name: "mood",
+  initialState: INITIAL_STATE,
+  reducers: {
+    updateCatMood: (state, action) => {
       state.mood = action.payload;
     }
-  },
-  [],
-  (state) => state
-};
+  }
+});
+
+export const { updateCatMood } = flappyMoodSlice.actions;
+export default flappyMoodSlice.reducer;
