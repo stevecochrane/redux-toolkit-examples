@@ -1,5 +1,4 @@
-//action type
-export const UPDATE_MOOD = "UPDATE_MOOD";
+import { createAction } from "@reduxjs/toolkit";
 
 export const MOODS = {
   SAD: "sad",
@@ -12,16 +11,13 @@ export const MOODS = {
 };
 const INITIAL_STATE = { mood: MOODS.SAD };
 
-//action creators
-export const updateCatMood = (payload) => ({
-  type: UPDATE_MOOD,
-  payload
-});
+const UPDATE_MOOD = "UPDATE_MOOD";
+export const updateCatMood = createAction(UPDATE_MOOD);
 
 //reducer
 export const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UPDATE_MOOD:
+    case updateCatMood.type:
       return { ...state, mood: action.payload };
 
     default:
