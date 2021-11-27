@@ -2,29 +2,36 @@ import { createSlice } from "@reduxjs/toolkit";
 import { findTweets } from "./findTweets";
 
 export const fetchTweets = (searchValue, numberOfResults) => async (dispatch) => {
+  try {
     dispatch(isLoadingTweets());
     const tweets = await findTweets(searchValue, numberOfResults);
     dispatch(loadingTweetsSuccess(tweets));
+  } catch (error) {
+    const errorMsg = error.toString();
+    dispatch(loadingTweetsFailed(errorMsg));
+  }
 };
 
-const initialState = { tweets: [], isLoading: false, error: null };
+const initialState = { error: null, isLoading: false, tweets: [] };
 
-// create the slice
 const finderSlice = createSlice({
   name: "finder",
   initialState,
   reducers: {
-    loadingTweetsSuccess(state, {payload}) {
+    isLoadingTweets(state) {
+      state.isLoading = true;
+    },
+    loadingTweetsFailed(state, payload) {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    loadingTweetsSuccess(state, { payload }) {
       state.tweets = payload;
       state.isLoading = false;
       state.error = null;
-    },
-    isLoadingTweets(state) {
-      state.isLoading = true;
     }
   }
 });
 
-// export the action creator and reducer
-export const { isLoadingTweets, loadingTweetsSuccess } = finderSlice.actions;
+export const { isLoadingTweets, loadingTweetsFailed, loadingTweetsSuccess } = finderSlice.actions;
 export default finderSlice.reducer;
