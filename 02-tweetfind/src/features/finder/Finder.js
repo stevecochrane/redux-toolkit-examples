@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import TweetEmbed from "react-tweet-embed";
-import { Flex, Input, IconButton, Stack, Skeleton, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CloseButton,
+  Flex,
+  IconButton,
+  Input,
+  Skeleton,
+  Stack,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 import { NumberOfResults } from "../numberOfResults/NumberOfResults";
@@ -11,7 +24,7 @@ export function Finder() {
   const [searchValue, setSearchValue] = useState("");
 
   const dispatch = useDispatch();
-  const { tweets, isLoading } = useSelector((state) => state.finder);
+  const { error, isLoading, tweets } = useSelector((state) => state.finder);
   const numberOfResults = useSelector((state) => state.numberOfResults);
 
   const handleSearch = async () => {
@@ -20,6 +33,19 @@ export function Finder() {
       dispatch(fetchTweets(searchValue, numberOfResults));
     }
   };
+
+  if (error) {
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle mr={2}>An Error occurred!</AlertTitle>
+        <AlertDescription>
+          We couldn't fetch tweets right now. Please try again later.
+        </AlertDescription>
+        <CloseButton position="absolute" right="8px" top="8px" />
+      </Alert>
+    );
+  }
 
   return (
     <>
