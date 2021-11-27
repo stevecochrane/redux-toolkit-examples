@@ -30,7 +30,7 @@ export function Finder() {
   const handleSearch = async () => {
     if (searchValue) {
       setSearchValue("");
-      dispatch(fetchTweets(searchValue, numberOfResults));
+      dispatch(fetchTweets({ searchValue, numberOfResults }));
     }
   };
 
